@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "magein\\db\\": "src/"
+      "db\\": "src/"
     }
   }
 }

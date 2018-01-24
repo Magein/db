@@ -1,6 +1,6 @@
 <?php
 
-namespace magein\db;
+namespace db;
 
 class Model
 {
