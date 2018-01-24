@@ -21,14 +21,12 @@ class Connect
 
     private static $config = [
         'driver' => 'mysql',
-        'host' => '116.196.116.90',
+        'host' => '',
         'port' => 3306,
-        'user' => 'xiaomage',
-        'password' => 'admin123',
-        'database' => 'demo',
-        'options' => [
-            \PDO::MYSQL_ATTR_INIT_COMMAND => 'set names utf8'
-        ],
+        'user' => '',
+        'password' => '',
+        'database' => '',
+        'options' => [],
         'charset' => 'utf-8',
         'prefix' => '',
     ];
@@ -40,13 +38,18 @@ class Connect
      */
     public static function instance($config = null, $name = null)
     {
-        $config = self::$config;
-
         if (empty($name)) {
-            $name = $config['driver'] . ':' . date('Y-m-d');
+            $name = date('Y-m-d');
         }
 
+        $name = sha1(md5($name));
+
         if (!isset(self::$instance[$name])) {
+
+            if ($config) {
+                $config = array_merge(self::$config, $config);
+            }
+
             self::$instance[$name] = self::connect($config);
         }
 

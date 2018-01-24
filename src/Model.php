@@ -62,6 +62,11 @@ class Model
     protected $autoUpdateTime = false;
 
     /**
+     * @var array
+     */
+    protected $config = [];
+
+    /**
      * @return string
      */
     public function getLastSql()
@@ -457,7 +462,7 @@ class Model
             return $this->sql;
         }
 
-        $pdo = Connect::instance();
+        $pdo = Connect::instance($this->config);
 
         $result = $pdo->query($sql);
 
