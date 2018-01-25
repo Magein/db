@@ -10,19 +10,17 @@ class Connect
     private static $instance = [];
 
     /**
-     * pdo 配置
+     * pdo 链接配置
      * @var array
      */
     private static $config = [
-        'driver' => 'mysql',
-        'host' => '',
-        'port' => 3306,
-        'user' => '',
-        'password' => '',
-        'database' => '',
-        'options' => [],
-        'charset' => 'utf-8',
-        'prefix' => '',
+        'driver' => 'mysql',// 驱动
+        'host' => '',// 主机
+        'port' => 3306,// 端口
+        'user' => '',// 数据库连接名称
+        'password' => '',// 数据库连接密码
+        'database' => '',// 数据库名称
+        'options' => [],//设置连接后的名称，如设置客户端连接编码 PDO::MYSQL_INIT_COMMAND=>'set names UTF8'
     ];
 
     /**
