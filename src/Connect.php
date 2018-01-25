@@ -32,14 +32,15 @@ class Connect
      */
     public static function instance(array $config = null, $reconnect = false)
     {
-        if (!isset(self::$instance) || $reconnect) {
-
-            if ($config) {
-                $config = array_merge(self::$config, $config);
-            }
-
-            self::$instance = self::connect($config);
+        if (self::$instance && !$reconnect) {
+            return self::$instance;
         }
+
+        if ($config) {
+            $config = array_merge(self::$config, $config);
+        }
+
+        self::$instance = self::connect($config);
 
         return self::$instance;
     }
