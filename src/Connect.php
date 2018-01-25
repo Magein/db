@@ -34,6 +34,7 @@ class Connect
             return self::$instance;
         }
 
+        // 保证配置参数不会缺少
         if ($config) {
             self::$config = array_merge(self::$config, $config);
         }
