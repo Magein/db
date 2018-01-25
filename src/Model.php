@@ -1,6 +1,6 @@
 <?php
 
-namespace Db;
+namespace Magein\Db;
 
 class Model
 {
@@ -62,9 +62,27 @@ class Model
     protected $autoUpdateTime = false;
 
     /**
+     * @var \PDO
+     */
+    protected $db;
+
+    /**
      * @var array
      */
-    protected $config = [];
+    private $config = [];
+
+    /**
+     * Model constructor.
+     * @param array $config
+     */
+    public function __construct(array $config = [])
+    {
+        if ($config) {
+            $this->config = array_merge($this->config, $config);
+        }
+
+        $this->connect();
+    }
 
     /**
      * @return string
@@ -80,6 +98,18 @@ class Model
     public function getTableName()
     {
         return $this->table;
+    }
+
+    /**
+     * @param array $config
+     * @param bool $reconnect
+     * @return $this
+     */
+    public function connect(array $config = [], $reconnect = false)
+    {
+        $this->db = Connect::instance($config, $reconnect);
+
+        return $this;
     }
 
     /**
@@ -462,9 +492,7 @@ class Model
             return $this->sql;
         }
 
-        $pdo = Connect::instance($this->config);
-
-        $result = $pdo->query($sql);
+        $result = $this->db->query($sql);
 
         return $result;
     }

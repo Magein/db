@@ -1,6 +1,6 @@
 <?php
 
-namespace Db;
+namespace Magein\Db;
 
 class Connect
 {
@@ -9,16 +9,10 @@ class Connect
      */
     private static $instance = [];
 
-    private function __construct()
-    {
-
-    }
-
-    private function __clone()
-    {
-
-    }
-
+    /**
+     * pdo 配置
+     * @var array
+     */
     private static $config = [
         'driver' => 'mysql',
         'host' => '',
@@ -32,28 +26,22 @@ class Connect
     ];
 
     /**
-     * @param null $config
-     * @param null $name
-     * @return \PDO
+     * @param array $config 数据库配置
+     * @param bool $reconnect 强制重新链接
+     * @return mixed
      */
-    public static function instance($config = null, $name = null)
+    public static function instance(array $config = null, $reconnect = false)
     {
-        if (empty($name)) {
-            $name = date('Y-m-d');
-        }
-
-        $name = sha1(md5($name));
-
-        if (!isset(self::$instance[$name])) {
+        if (!isset(self::$instance) || $reconnect) {
 
             if ($config) {
                 $config = array_merge(self::$config, $config);
             }
 
-            self::$instance[$name] = self::connect($config);
+            self::$instance = self::connect($config);
         }
 
-        return self::$instance[$name];
+        return self::$instance;
     }
 
     /**
@@ -62,7 +50,6 @@ class Connect
      */
     private static function connect($config = null)
     {
-
         $driver = $config['driver'];
         $host = $config['host'];
         $port = $config['port'];
