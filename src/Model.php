@@ -67,21 +67,12 @@ class Model
     protected $db;
 
     /**
-     * @var array
-     */
-    private $config = [];
-
-    /**
      * Model constructor.
      * @param array $config
      */
     public function __construct(array $config = [])
     {
-        if ($config) {
-            $this->config = array_merge($this->config, $config);
-        }
-
-        $this->connect();
+        $this->connect($config);
     }
 
     /**
