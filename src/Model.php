@@ -293,7 +293,10 @@ class Model
     private function parseValue($data)
     {
         if (is_string($data)) {
-            return '"' . $data . '"';
+
+            $data = preg_replace('/\'/', '\\\'', $data);
+
+            return '\'' . $data . '\'';
         }
 
         return $data;
@@ -384,7 +387,11 @@ class Model
 
         $result = $this->query($sql);
 
-        return $result;
+        if ($result) {
+            return $this->db->lastInsertId();
+        }
+
+        return false;
     }
 
     /**
@@ -418,7 +425,11 @@ class Model
 
         $result = $this->query($sql);
 
-        return $result;
+        if ($result) {
+            return $result->rowCount();
+        }
+
+        return false;
     }
 
     /**
@@ -438,6 +449,10 @@ class Model
         $sql = $this->parseSql(__FUNCTION__);
 
         $result = $this->query($sql);
+
+        if ($result) {
+            return $result->rowCount();
+        }
 
         return $result;
     }

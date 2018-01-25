@@ -35,10 +35,10 @@ class Connect
         }
 
         if ($config) {
-            $config = array_merge(self::$config, $config);
+            self::$config = array_merge(self::$config, $config);
         }
 
-        self::$instance = self::connect($config);
+        self::$instance = self::connect(self::$config);
 
         return self::$instance;
     }
